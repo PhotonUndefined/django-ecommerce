@@ -96,6 +96,7 @@ DATABASES = {
         'PORT': '13909',
         'OPTIONS': {
             'sslmode': 'require',
+        },
     }
 }
 
