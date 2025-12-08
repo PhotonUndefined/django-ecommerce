@@ -94,6 +94,8 @@ DATABASES = {
         'PASSWORD': os.environ['DB_PASSWORD_PP'],
         'HOST': 'maglev.proxy.rlwy.net',
         'PORT': '13909',
+        'OPTIONS': {
+            'sslmode': 'require',
     }
 }
 
