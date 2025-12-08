@@ -29,6 +29,17 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
+
+DB_PASSWORD_PP = os.environ.get('DB_PASSWORD_PP')
+
+
+# Cloudinary configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': os.environ.get('CLOUDINARY_CLOUD_NAME'),
+    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
+    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
+}
+
 ALLOWED_HOSTS = ['django-ecommerce-production-9915.up.railway.app']
 CSRF_TRUSTED_ORIGINS = ['https://django-ecommerce-production-9915.up.railway.app']
 
@@ -42,10 +53,15 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    
+    # Third-party apps
+    'cloudinary',
+    'cloudinary_storage',
+    'whitenoise.runserver_nostatic',
+    # Custom apps
     'store',
     'cart',
     'payment',
-    'whitenoise.runserver_nostatic',
 ]
 
 MIDDLEWARE = [
@@ -91,7 +107,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'railway',
         'USER': 'postgres',
-        'PASSWORD': os.environ['DB_PASSWORD_PP'],
+        'PASSWORD': DB_PASSWORD_PP,
         'HOST': 'maglev.proxy.rlwy.net',
         'PORT': '13909',
         'OPTIONS': {
@@ -138,6 +154,9 @@ USE_TZ = True
 STATIC_URL = 'static/'
 STATICFILES_DIRS = ['static']
 
+# Cloudinary storage configuration
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
 # Whitenoise static configuration
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATIC_ROOT = BASE_DIR / 'staticfiles'
@@ -150,3 +169,4 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
